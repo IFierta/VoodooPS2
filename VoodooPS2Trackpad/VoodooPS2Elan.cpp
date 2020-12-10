@@ -491,14 +491,15 @@ void ApplePS2Elan::setDevicePowerState(UInt32 whatToDo) {
             // Must not issue any commands before the device has
             // completed its power-on self-test and calibration
             IOSleep(wakedelay);
+            
+            //Initialize the touchpad
+            elantechSetupPS2();
 
             // Clear packet buffer pointer to avoid issues caused by stale packet fragments
             _packetByteCount = 0;
             _ringBuffer.reset();
 
-            // Reset and enable the touchpad
-            resetMouse();
-            elantechSetupPS2();
+            //Enable the touchpad
             setTouchPadEnable(true);
             break;
     }
